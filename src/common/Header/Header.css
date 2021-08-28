@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    background-color: #222;
+    padding: 8px 32px 8px 16px;
+    height: 36px;
+}
+
+.logo {
+    animation: rotation 8s linear infinite; 
+    background-color: #ff7f7f;
+    height: 35px;
+    text-align: left;  
+}
+
+.logobutton {
+    height: 35px;
+    background-color: #4CAF50;
+}
+
+.bookshowbutton {
+    height: 35px;
+    
+}
+
+.bookshowDiv {
+    position: relative;
+    left:83%;
+    padding: 0px 10px 0px 10px;
+}
+
+.bookshowDiv {
+   position: relative;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(180deg);
+    }
+  }
