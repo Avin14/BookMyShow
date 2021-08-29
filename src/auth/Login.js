@@ -3,7 +3,7 @@ import './form.css';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
 
-export default function Login(updateModalValue){
+export default function Login({turnOffModal}){
     const [loginDetails, setLoginDetails] = useState({
         name: "",
         password: "",
@@ -23,6 +23,8 @@ export default function Login(updateModalValue){
         console.log(header_details);
 
         try{
+            
+            turnOffModal(false);
             const rawResponse = await fetch('/api/v1/auth/login', {
                 method : 'POST',
                 header : header_details
@@ -31,7 +33,6 @@ export default function Login(updateModalValue){
 
             if (rawResponse.ok){
                 console.log("2: Reached Here!!!!")
-                updateModalValue();
                 //history.push("/");
             } else {
                 const error = new Error();

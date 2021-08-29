@@ -116,7 +116,7 @@ const Header = () => {
                     <Tab label="Register" />
                     </Tabs>
                     <TabPanel value={value} index={0}>
-                        <Login updateModalValue={() => closeModal()}/>
+                        <Login turnOffModal={setModalIsOpen} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <Register />
