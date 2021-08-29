@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useHistory } from 'react';
 import './Home.css'
 import { createTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
@@ -47,8 +47,20 @@ const useStyles = makeStyles((theme) => ({
 export default function ReleasedMovies(){
     
     const [releasedMovies, setReleasedMovies] = useState({movies: []});
+    //const [releasedbckupMovies, setReleasedbckupMovies] = useState({bk_movies: []});
     const [genresList, setGenresList] = useState({genres : []});
     const [artistsList, setArtistsList] = useState({artists: []});
+    const [genreValue, setGenreValue] = useState([]);
+    const [artistValue, setArtistValue] = useState([]);
+    const [releaseDateEnd, setReleaseDateEnd] = useState("");
+    const [releaseDateStart, setReleaseDateStart] = useState("");
+    const [movieName, setMovieName] = useState("");
+
+    const history = useHistory();
+
+    const handleRoute = () =>{ 
+        history.push("/detail");
+      }
 
     useEffect(() => {
         async function fetchgenre(){
@@ -75,6 +87,7 @@ export default function ReleasedMovies(){
 
             const response = await rawResponse.json();
             setReleasedMovies({movies : response.movies});
+            //setReleasedbckupMovies({bk_movies : response.movies});
         }
 
         async function fetchArtists(){
@@ -97,11 +110,32 @@ export default function ReleasedMovies(){
     }, [])
 
     const movieFilterHandler = (e) => {
-        return 1;
+        setMovieName(e.target.value);
     }
 
     const applyFilterHandler = (e) => {
-        return 1;
+        // Restore the backupfirst
+        //setReleasedMovies({movies :bk_movies});
+
+        if (movieName !== ""){
+            const filterMovies = movies.filter(key => {
+                return key.title === movieName});
+            setReleasedMovies({movies :filterMovies});
+        }
+
+        if (releaseDateStart !== ""){
+            const filterMovies = movies.filter(key => {
+                return key.release_date >= releaseDateStart});
+            setReleasedMovies({movies :filterMovies});
+        }
+
+        if (releaseDateEnd !== ""){
+            const filterMovies = movies.filter(key => {
+                return key.release_date <= releaseDateStart});
+            setReleasedMovies({movies :filterMovies});
+        }
+
+
     }
 
     const genreChangeHandler = (e) => {
@@ -115,24 +149,21 @@ export default function ReleasedMovies(){
     const {genres} = genresList;
     const {artists} = artistsList;
     const {movies} =  releasedMovies;
+    //const {bk_movies} = releasedbckupMovies;
     const classes = useStyles();
-
-    const [genreValue, setGenreValue] = useState([]);
-    const [artistValue, setArtistValue] = useState([]);
-    const [releaseDateEnd, setReleaseDateEnd] = useState("");
-    const [releaseDateStart, setReleaseDateStart] = useState("");
+    
 
 
     return(
         <Fragment>
             <div className="flexConatiner">
-                <Grid container spacing={1}>
+                <Grid container spacing={2}>
                     <Grid item xs={9}>
                         <div className={classes.root}>
-                            <ImageList cols={4} rowHeight={350} className={classes.imageList}>
+                            <ImageList cols={4} rowHeight={350} gap={8} className={classes.imageList}>
                                 {movies.map((item) => (
                                     <ImageListItem key={item.id}>
-                                        <img src={item.poster_url} alt={item.title} onClick={movieDetailsHandler} />
+                                        <img src={item.poster_url} alt={item.title} onClick={movieDetailsHandler} style={{cursor: "pointer"}}/>
                                         <ImageListItemBar title={item.title} 
                                         subtitle={<span>Release Date: {item.release_date}</span>} />
                                     </ImageListItem>
@@ -150,7 +181,7 @@ export default function ReleasedMovies(){
                                     </Typography>
                                     <br />
                                     <FormControl required className="formControl" style={{minWidth: 240}}>
-                                        <TextField id="standard-basic" label="Movie Name" onChange={movieFilterHandler} />
+                                        <TextField id="standard-basic" value={movieName} label="Movie Name" onChange={movieFilterHandler} />
                                     </FormControl>
                                     <br />
                                     <br />
@@ -204,6 +235,7 @@ export default function ReleasedMovies(){
                                             label="Release Date Start"
                                             type="date"
                                             value={releaseDateStart}
+                                            onChange={(e) => setReleaseDateStart(e.target.value)}
                                             defaultValue="dd-mm-yyyy"
                                             className={classes.textField}
                                             InputLabelProps={{
@@ -219,6 +251,7 @@ export default function ReleasedMovies(){
                                             label="Release Date End"
                                             type="date"
                                             value={releaseDateEnd}
+                                            onChange={(e) => setReleaseDateEnd(e.target.value)}
                                             defaultValue="dd-mm-yyyy"
                                             className={classes.textField}
                                             InputLabelProps={{

@@ -54,9 +54,9 @@ const Header = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     // This section is used to determine whether the Login or Logout page needs to be shown
-    const userDetails = useSelector(state=>state.userDetails);
+    const username = useSelector(state=>state.username);
     let buttonValue;
-    if (userDetails.first_name === undefined){
+    if (username === ""){
         buttonValue = "LOGIN";   
     } else {
         buttonValue = "LOGOUT";

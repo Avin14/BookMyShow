@@ -6,11 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 //import Controller from './screens/Controller';
 import Home from './screens/Home/Home'
 import { Provider } from 'react-redux';
+import BookMyShow from './screens/BookMyShow';
 import store from './auth/authStore';
 
 ReactDOM.render(
     <Provider store={store}>
-        <Home />
+        <BookMyShow />
     </Provider>, 
     document.getElementById('root'));
 registerServiceWorker();
