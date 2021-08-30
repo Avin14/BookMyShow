@@ -35,7 +35,7 @@ export default function Detail(){
                 </Grid>
                 <Grid item xs={6}>
                     <Typography variant="h4">{detail_movie.title}</Typography>
-                    <Typography><b>Genre: </b>{detail_movie.genres}</Typography>
+                    <Typography><b>Genre: </b>{detail_movie.genres.reduce((a, b) => {return a + "," + b})}</Typography>
                     <Typography><b>Duration: </b>{detail_movie.duration}</Typography>
                     <Typography><b>Release Date: </b>{detail_movie.release_date}</Typography>                    
                     <Typography><b>Rating: </b>{detail_movie.rating}</Typography>

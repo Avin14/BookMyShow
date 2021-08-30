@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import './Home.css'
 import { createTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
-import { Button, Card, CardContent, Checkbox, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
@@ -197,8 +197,12 @@ export default function ReleasedMovies(){
                                                           value={name.genre}
                                                           checked={genreValue.includes(name.id)}
                                                           >
-                                                    <Checkbox value={name.genre} />
-                                                    {name.genre}
+                                                    <FormControlLabel
+                                                    value={name.genre}
+                                                    control={<Checkbox color="primary" />}
+                                                    label={name.genre}
+                                                    labelPlacement="end"
+                                                    />
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -214,11 +218,15 @@ export default function ReleasedMovies(){
                                                 >
                                             {artists.map((name) => (
                                                 <MenuItem key={name.id} 
-                                                          value={name.first_name}
-                                                          checked={artistValue.includes(name.id)}
-                                                          >
-                                                    <Checkbox value={name.first_name + " " + name.last_name} />
-                                                    {name.first_name + " " + name.last_name}
+                                                value={name.first_name}
+                                                checked={artistValue.includes(name.id)}
+                                                >
+                                                    <FormControlLabel
+                                                    value={name.first_name + " " + name.last_name}
+                                                    control={<Checkbox color="primary" />}
+                                                    label={name.first_name + " " + name.last_name}
+                                                    labelPlacement="end"
+                                                    />
                                                 </MenuItem>
                                             ))}
                                         </Select>

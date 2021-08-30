@@ -16,6 +16,6 @@ function userReducer(state=intialState, action){
         default: return state;
     }
 }
-8
+
 // Create the store
 export default createStore(userReducer);
