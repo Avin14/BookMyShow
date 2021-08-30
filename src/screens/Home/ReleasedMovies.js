@@ -197,10 +197,8 @@ export default function ReleasedMovies(){
                                                           value={name.genre}
                                                           checked={genreValue.includes(name.id)}
                                                           >
+                                                    <Checkbox value={name.genre} />
                                                     {name.genre}
-                                                    {/* <Checkbox value={name.genre} >
-                                                        <Label>{name.genre}</Label>
-                                                    </Checkbox> */}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -219,10 +217,8 @@ export default function ReleasedMovies(){
                                                           value={name.first_name}
                                                           checked={artistValue.includes(name.id)}
                                                           >
+                                                    <Checkbox value={name.first_name + " " + name.last_name} />
                                                     {name.first_name + " " + name.last_name}
-                                                    {/* <Checkbox value={name.genre} >
-                                                        <Label>{name.genre}</Label>
-                                                    </Checkbox> */}
                                                 </MenuItem>
                                             ))}
                                         </Select>

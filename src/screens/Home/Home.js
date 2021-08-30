@@ -52,7 +52,7 @@ export default function Home(){
             <div className="upcomingMovies" >Upcoming Movies</div>
             <div className={classes.root}>
                 <ImageList cols={6} rowHeight={250} className={classes.imageList}>
-                    {movies.map((item) => (
+                    {movies.map((item) =>  (
                         <ImageListItem key={item.id}>
                             <img src={item.poster_url} alt={item.title} />
                             <ImageListItemBar title={item.title} />
