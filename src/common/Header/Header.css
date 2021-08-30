@@ -28,8 +28,9 @@
     padding: 0px 10px 0px 10px;
 }
 
-.bookshowDiv {
-   position: relative;
+.bookshowLogin {
+    margin-left: auto; 
+    margin-right: 0;
 }
 
 @keyframes rotation {

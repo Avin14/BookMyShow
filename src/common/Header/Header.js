@@ -13,8 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import Login from './../../auth/Login';
 import Register from './../../auth/Register'
 
-
-//import { makeStyles } from '@material-ui/core/styles';
 Modal.setAppElement('#root');
 
 const customStyles = {
@@ -49,7 +47,7 @@ const customStyles = {
     );
   }
 
-const Header = () => {
+const Header = ({showButton}) => {
     // Here are decide whether the modal needs to be one or off
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -65,10 +63,6 @@ const Header = () => {
     function openModal() {
         setModalIsOpen(true);
     }
-
-    function closeModal() {
-        setModalIsOpen(false);
-      }
 
     // Function that will pop up the modal
     function  displayLoginModal(){
@@ -86,14 +80,15 @@ const Header = () => {
         setValue(newValue);
     };
 
+
     return(
         <Fragment>
             <div className="header">
                 <img className="logo" src={Logo} alt="Logo.svg"></img>
                 <div className="bookshowDiv">
-                    <Button className="bookshowbutton" variant="contained" color="primary">Book Show</Button>
+                    {showButton ? <Button className="bookshowbutton" variant="contained" color="primary">Book Show</Button> : null}
                 </div>
-                <div className="bookshowDiv">
+                <div className="bookshowLogin">
                     <Button className="logobutton" variant="contained" color="inherit" onClick={() => displayLoginModal()}>{buttonValue}</Button>
                 </div>
             </div>

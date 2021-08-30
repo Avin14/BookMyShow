@@ -14,7 +14,6 @@ export default function Login({turnOffModal}){
     const onFormSubmitted = async (e) => {
         e.preventDefault();
         const params = "Basic " + window.btoa(`${name}:${password}`);
-        console.log(`${name}:${password}` + ":" + params );
 
         const header_details = {"Accept": "application/json",
                                 "Content-Type": "application/json;charset=UTF-8",

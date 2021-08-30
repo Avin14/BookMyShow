@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useHistory } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import './Home.css'
 import { createTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from '@material-ui/core/Grid';
 import {ImageList, ImageListItem, ImageListItemBar } from '@material-ui/core';
 import { Label } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ReleasedMovies(){
     
     const [releasedMovies, setReleasedMovies] = useState({movies: []});
-    //const [releasedbckupMovies, setReleasedbckupMovies] = useState({bk_movies: []});
+    const [releasedbckupMovies, setReleasedbckupMovies] = useState({bk_movies: []});
     const [genresList, setGenresList] = useState({genres : []});
     const [artistsList, setArtistsList] = useState({artists: []});
     const [genreValue, setGenreValue] = useState([]);
@@ -56,11 +58,8 @@ export default function ReleasedMovies(){
     const [releaseDateStart, setReleaseDateStart] = useState("");
     const [movieName, setMovieName] = useState("");
 
+    const dispatch = useDispatch();
     const history = useHistory();
-
-    const handleRoute = () =>{ 
-        history.push("/detail");
-      }
 
     useEffect(() => {
         async function fetchgenre(){
@@ -87,7 +86,7 @@ export default function ReleasedMovies(){
 
             const response = await rawResponse.json();
             setReleasedMovies({movies : response.movies});
-            //setReleasedbckupMovies({bk_movies : response.movies});
+            setReleasedbckupMovies({bk_movies : response.movies});
         }
 
         async function fetchArtists(){
@@ -142,14 +141,15 @@ export default function ReleasedMovies(){
         return 1;
     }
 
-    const movieDetailsHandler = (e) => {
-        return 1;
+    const movieDetailsHandler = (data) => {
+        dispatch({"type":"SET_MOVIE", payload:data})
+        history.push("/detail");
     }
 
     const {genres} = genresList;
     const {artists} = artistsList;
     const {movies} =  releasedMovies;
-    //const {bk_movies} = releasedbckupMovies;
+    const {bk_movies} = releasedbckupMovies;
     const classes = useStyles();
     
 
@@ -163,7 +163,7 @@ export default function ReleasedMovies(){
                             <ImageList cols={4} rowHeight={350} gap={8} className={classes.imageList}>
                                 {movies.map((item) => (
                                     <ImageListItem key={item.id}>
-                                        <img src={item.poster_url} alt={item.title} onClick={movieDetailsHandler} style={{cursor: "pointer"}}/>
+                                        <img key={item.title} src={item.poster_url} alt={item.title} onClick={() => movieDetailsHandler(item)} style={{cursor: "pointer", "pointerEvents": "all"}}/>
                                         <ImageListItemBar title={item.title} 
                                         subtitle={<span>Release Date: {item.release_date}</span>} />
                                     </ImageListItem>
@@ -208,7 +208,7 @@ export default function ReleasedMovies(){
                                     <br />
                                     <br />
                                     <FormControl className={classes.formControl} style={{minWidth: 240}}>
-                                        <InputLabel htmlFor="genres">Artists</InputLabel>
+                                        <InputLabel htmlFor="artists">Artists</InputLabel>
                                         <Select
                                                 multiple
                                                 value={artistValue}
@@ -216,10 +216,10 @@ export default function ReleasedMovies(){
                                                 >
                                             {artists.map((name) => (
                                                 <MenuItem key={name.id} 
-                                                          value={name.genre}
+                                                          value={name.first_name}
                                                           checked={artistValue.includes(name.id)}
                                                           >
-                                                    {name.genre}
+                                                    {name.first_name + " " + name.last_name}
                                                     {/* <Checkbox value={name.genre} >
                                                         <Label>{name.genre}</Label>
                                                     </Checkbox> */}
@@ -234,7 +234,6 @@ export default function ReleasedMovies(){
                                             id="date"
                                             label="Release Date Start"
                                             type="date"
-                                            value={releaseDateStart}
                                             onChange={(e) => setReleaseDateStart(e.target.value)}
                                             defaultValue="dd-mm-yyyy"
                                             className={classes.textField}
@@ -250,7 +249,6 @@ export default function ReleasedMovies(){
                                             id="date"
                                             label="Release Date End"
                                             type="date"
-                                            value={releaseDateEnd}
                                             onChange={(e) => setReleaseDateEnd(e.target.value)}
                                             defaultValue="dd-mm-yyyy"
                                             className={classes.textField}

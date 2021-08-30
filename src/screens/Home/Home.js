@@ -48,7 +48,7 @@ export default function Home(){
 
     return(
         <Fragment>
-            <Header />
+            <Header showButton={false} />
             <div className="upcomingMovies" >Upcoming Movies</div>
             <div className={classes.root}>
                 <ImageList cols={6} rowHeight={250} className={classes.imageList}>
